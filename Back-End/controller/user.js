@@ -12,14 +12,20 @@ router.post("/create-user",upload.single("file"),async(req,res,next) => {
     if(userEmail){
         return next(new ErrorHandler("User Already exits",400));
     }
-    const filename = req.file.filename;
-    const fileUrl = path.join(filename);
+    // const filename = req.file.filename;
+    // const fileUrl = path.join(filename);
+    // console.log(fileUrl);
     const user = {
         name:name,
         email:email,
         password:password,
-        avatar:fileUrl,
+        avatar:"hello",
     }
+    const newUser = await User.create(user);
+    res.status(201).json({
+        success:true,
+        newUser,
+    })
     console.log(user);
 });
 
