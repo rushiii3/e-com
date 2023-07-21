@@ -23,7 +23,8 @@ export const Signup = () => {
     axios
       .post(`${server}/user/create-user`, newForm, config )
       .then((res) => {
-        console.log(res);
+        alert(res.data[0]);
+        
       })
       .catch((err) => {
         console.log(err);
