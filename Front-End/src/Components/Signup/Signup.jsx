@@ -6,6 +6,9 @@ import { RxAvatar } from "react-icons/rx";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from "axios";
 import { server } from "../../server";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,11 +26,14 @@ export const Signup = () => {
     axios
       .post(`${server}/user/create-user`, newForm, config )
       .then((res) => {
-        alert(res.data[0]);
-        
+        toast.success(res.data.message);
+        setEmail("");
+        setname("");
+        setPassword("");
+        setavatar("");
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err.response.data.message)
       });
   };
   const FileInputChange = (e) => {
@@ -151,6 +157,7 @@ export const Signup = () => {
               <button type="submit" class="appearance-none w-full h-[40px]  py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
                 Submit
               </button>
+
             </div>
             <div className="flex items-center w-full">
               <h4>Already have an acoount?</h4>
