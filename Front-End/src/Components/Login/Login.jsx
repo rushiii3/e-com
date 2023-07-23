@@ -1,12 +1,30 @@
 import {React , useState} from 'react'
 import '../../App.css'
 import '../../output.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import axios from 'axios';
+import { server } from '../../server';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function Login() {
+    const navigate = useNavigate();
     const [email,setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [visible, setvisible] = useState(false)
+    const [visible, setvisible] = useState(false);
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        await axios.post(
+            `${server}/user/login-user`,{ email, password,},{withCredentials:true}
+        ).then((res) => {
+            toast.success("Login Success!");
+            navigate("/");
+        }).catch((err) => {
+            console.log(err);
+            toast.error(err.response.data.message);
+        })
+    }
   return (
     <div className='min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-md'>
@@ -16,7 +34,7 @@ export default function Login() {
         </div>
         <div className='mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4'>
             <div className='bg-white py-8 px-4 shadow rounded-xl sm:px-10'>
-                <form className='space-y-6'>
+                <form className='space-y-6' onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor='email' className='block text-sm font-medium text-gray-700'>Email Address</label>
                         <div className='mt-1'>
@@ -65,7 +83,7 @@ export default function Login() {
                         </div>
                     </div>
                     <div>
-              <button class="appearance-none w-full h-[40px]  py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Submit</button>
+              <button type='submit' className="appearance-none w-full h-[40px]  py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Submit</button>
                        
                     </div>
                     <div className='flex items-center w-full'>
