@@ -1,4 +1,15 @@
+:root {
+    --color-primary: #00a3e0;
+    --color-secondary: #470a68;
+    --color-success: #87d500;
+    --color-accent: #e87722;
+  
+    /* Dark themes below */
+    --color-dark-primary: rgba(31, 41, 55, 1);
+    --dark-text: rgba(187, 193, 198, 1);
+  }
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
